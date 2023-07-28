@@ -50,37 +50,6 @@ prompt_template = ChatPromptTemplate.from_messages \
     )
 
 conversation = ConversationChain(memory=st.session_state.buffer_memory, prompt=prompt_template, llm=llm, verbose=True)
-
-# container for chat history
-response_container = st.container()
-# container for text box
-textcontainer = st.container()
-
-with textcontainer:
-    query = st.text_input("Query: ", key="input")
-    if st.button("Process"):
-        if query:
-            with st.spinner("typing..."):
-                conversation_string = get_conversation_string()
-                # refined_query = query_refiner(conversation_string, query,model[0])
-                # st.subheader("Refined Query:")
-                # st.write(refined_query)
-                context = find_match(query, model[1])
-                response = conversation.predict(input=f"Context:\n {context} \n\n Query:\n{query}")
-            st.session_state.requests.append(query)
-            st.session_state.responses.append(response)
-with response_container:
-    if st.session_state['responses']:
-
-        for i in range(len(st.session_state['responses'])):
-            message(st.session_state['responses'][i], is_user=True, key=str(i))
-            if i < len(st.session_state['requests']):
-                message(st.session_state["requests"][i], key=str(i) + '_user')
-
-
-
-
-
 # Set up your OpenAI API key
 load_dotenv()
 pinecone.init(api_key="eb457224-95f8-4881-a32d-b28bcf8adb23", environment="us-west4-gcp-free")
@@ -134,3 +103,34 @@ def get_conversation_string():
         conversation_string += "Human: " + st.session_state['requests'][i] + "\n"
         conversation_string += "Bot: " + st.session_state['responses'][i + 1] + "\n"
     return conversation_string
+# container for chat history
+response_container = st.container()
+# container for text box
+textcontainer = st.container()
+
+with textcontainer:
+    query = st.text_input("Query: ", key="input")
+    if st.button("Process"):
+        if query:
+            with st.spinner("typing..."):
+                conversation_string = get_conversation_string()
+                # refined_query = query_refiner(conversation_string, query,model[0])
+                # st.subheader("Refined Query:")
+                # st.write(refined_query)
+                context = find_match(query, model[1])
+                response = conversation.predict(input=f"Context:\n {context} \n\n Query:\n{query}")
+            st.session_state.requests.append(query)
+            st.session_state.responses.append(response)
+with response_container:
+    if st.session_state['responses']:
+
+        for i in range(len(st.session_state['responses'])):
+            message(st.session_state['responses'][i], is_user=True, key=str(i))
+            if i < len(st.session_state['requests']):
+                message(st.session_state["requests"][i], key=str(i) + '_user')
+
+
+
+
+
+
