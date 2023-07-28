@@ -1,4 +1,4 @@
 pinecone-client==2.2.1
 langchain==0.0.191
 streamlit==1.1.0
-Streamlight-chat 
+Streamlight-chat==0.1.1
