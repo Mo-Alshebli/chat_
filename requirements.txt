@@ -1,5 +1,5 @@
 langchain==0.0.191
 streamlit==1.1.0
-pinecone==2.2.1
+pinecone
 openai
 dotenv
