@@ -32,7 +32,7 @@ if 'buffer_memory' not in st.session_state:
     st.session_state.buffer_memory = ConversationBufferWindowMemory(k=3, return_messages=True)
 
 llm = ChatOpenAI(model_name=model[1],
-                 openai_api_key="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")
+                 openai_api_key="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")
 
 system_msg_template = SystemMessagePromptTemplate.from_template(template="""أجب على السؤال بأكبر قدر ممكن من الصدق 
 باستخدام السياق المتوفر ، وأريد الإجابة كلها باللغة العربية وإذا لم تكن الإجابة موجودة في النص أدناه ، قل "لا أعرف 
