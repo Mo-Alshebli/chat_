@@ -15,7 +15,8 @@ import openai
 from langchain.embeddings.openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 
-model = ["gpt-3.5-turbo",
+model = ["text-embedding-ada-002",
+    "gpt-3.5-turbo",
          "gpt-3.5-turbo-16k-0613",
 
          ]
@@ -32,7 +33,7 @@ if 'buffer_memory' not in st.session_state:
     st.session_state.buffer_memory = ConversationBufferWindowMemory(k=3, return_messages=True)
 
 llm = ChatOpenAI(model_name=model[1],
-                 openai_api_key="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")
+                 openai_api_key="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")
 
 system_msg_template = SystemMessagePromptTemplate.from_template(template="""أجب على السؤال بأكبر قدر ممكن من الصدق 
 باستخدام السياق المتوفر ، وأريد الإجابة كلها باللغة العربية وإذا لم تكن الإجابة موجودة في النص أدناه ، قل "لا أعرف 
@@ -117,7 +118,7 @@ with textcontainer:
                 # refined_query = query_refiner(conversation_string, query,model[0])
                 # st.subheader("Refined Query:")
                 # st.write(refined_query)
-                context = find_match(query, model[1])
+                context = find_match(query, model[0])
                 response = conversation.predict(input=f"Context:\n {context} \n\n Query:\n{query}")
             st.session_state.requests.append(query)
             st.session_state.responses.append(response)
